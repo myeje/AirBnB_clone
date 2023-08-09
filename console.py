@@ -15,8 +15,12 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, args):
-        """EOF command to exit the program"""
+        """EOF command to exit the program (CTRL + D)"""
         return True
+
+     def emptyline(self):
+        """Override emptyline to do nothing"""
+        pass
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
@@ -126,6 +130,5 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             else:
                 print("** instance id missing **")
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
