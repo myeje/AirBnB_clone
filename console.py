@@ -13,8 +13,12 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, args):
-        """EOF command to exit the program"""
+        """EOF command to exit the program (CTRL + D)"""
         return True
+
+    def emptyline(self):
+        """Override emptyline to do nothing"""
+        pass
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
