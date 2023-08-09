@@ -7,7 +7,7 @@ from models import storage
 from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
-    prompt = ":) \n"
+    prompt = ":) "
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -16,6 +16,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """EOF command to exit the program (CTRL + D)"""
+        print()
         return True
 
     def emptyline(self):
@@ -126,15 +127,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        if len(args) < 4:
+        if len(args) < 2:
             print("** instance id missing **")
             return
 
-        if len(args) < 5:
+        if len(args) < 3:
             print("** attribute name missing **")
             return
 
-        if len(args) < 6:
+        if len(args) < 4:
             print("** value missing **")
             return
 
