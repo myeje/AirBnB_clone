@@ -6,6 +6,7 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = ":) "
 
@@ -36,7 +37,6 @@ class HBNBCommand(cmd.Cmd):
             new_model = eval(model_type)()
             new_model.save()
             print(new_model.id)
-
 
     def do_show(self, model_key=None):
         """
@@ -147,6 +147,7 @@ class HBNBCommand(cmd.Cmd):
             attribute_value = " ".join(args[3:])
             setattr(obj, attribute_name, attribute_value)
             storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
