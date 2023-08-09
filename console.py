@@ -107,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         for key, obj in storage.all().items():
             if not model_type or obj.__class__.__name__ == model_type:
                 ob.append(str(obj))
-                print(ob)
+        print(ob)
 
     def do_update(self, model_info):
         """
