@@ -67,4 +67,5 @@ class BaseModel:
         print:
             [<class name>] (<self.id>) <self.__dict__>
         """
-        return f"[BaseModel] ({self.id}) {self.__dict__}"
+        class_name = self.__class__.__name__
+        return f"[{class_name}] ({self.id}) {self.__dict__}"
