@@ -5,6 +5,7 @@ Class console command that opens cmd interface to edit and update files
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not model_type:
             print("** class name missing **")
-        elif model_type not in ["BaseModel"]:
+        elif model_type not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
         else:
             new_model = eval(model_type)()
@@ -55,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         model_id = args[1]
 
-        if class_name not in ["BaseModel"]:
+        if class_name not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
 
@@ -82,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         model_id = args[1]
 
-        if class_name not in ["BaseModel"]:
+        if class_name not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
 
@@ -99,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name.
         """
-        if model_type and model_type not in ["BaseModel"]:
+        if model_type and model_type not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
 
@@ -123,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
         model_id = args[1]
         attribute_name = args[2]
 
-        if class_name not in ["BaseModel"]:
+        if class_name not in ["BaseModel", "User"]:
             print("** class doesn't exist **")
             return
 
