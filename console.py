@@ -6,10 +6,16 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = ":) "
+    classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -32,7 +38,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not model_type:
             print("** class name missing **")
-        elif model_type not in ["BaseModel", "User"]:
+        elif model_type not in self.classes:
             print("** class doesn't exist **")
         else:
             new_model = eval(model_type)()
@@ -56,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         model_id = args[1]
 
-        if class_name not in ["BaseModel", "User"]:
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
 
@@ -83,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         model_id = args[1]
 
-        if class_name not in ["BaseModel", "User"]:
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
 
@@ -100,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name.
         """
-        if model_type and model_type not in ["BaseModel", "User"]:
+        if model_type and model_type not in self.classes:
             print("** class doesn't exist **")
             return
 
@@ -124,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
         model_id = args[1]
         attribute_name = args[2]
 
-        if class_name not in ["BaseModel", "User"]:
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
 
