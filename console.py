@@ -16,6 +16,7 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     prompt = ":) "
     classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    valid_commands = ["all", "count"]
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -116,6 +117,13 @@ class HBNBCommand(cmd.Cmd):
                 ob.append(str(obj))
         print(ob)
 
+    def do_count(self, class_name):
+        """
+        Counts all instances of the class name
+        """
+        count = len([obj for obj in storage.all().values() if obj.__class__.__name__ == class_name])
+        print(count)
+
     def do_update(self, model_info):
         """
         Updates an instance based on the class name and id by adding
@@ -155,6 +163,53 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, attribute_name, attribute_value)
             storage.save()
 
+    
+    def default(self, line):
+        """
+        This method is called on an input line
+        """
+        self.mode_commands(line)
+
+
+    def mode_commands(self, cmd_line):
+        """
+        This method splits commands and disignates them to
+        their proper channels
+        """
+        if "(" in cmd_line and ")" in cmd_line:
+            class_command, args = cmd_line.split('(')
+            class_name, command = class_command.split('.')
+            args = args.strip(')')
+            if class_name in self.classes and command in self.valid_commands:
+                if args:
+                    self.handle_commands(class_name, command, args)
+                else:
+                    self.handle_commands(class_name, command)
+            else:
+                print("Unknown syntax: {}".format(cmd_line))
+        elif "." in cmd_line:
+            class_name, command = cmd_line.split('.')
+            if class_name in self.classes and command in self.valid_commands:
+                self.handle_commands(class_name, command)
+            else:
+                print("Unknown syntax: {}".format(cmd_line))
+        else:
+            print("Unknown syntax: {}".format(cmd_line))
+
+
+
+    def handle_commands(self, class_name, command):
+        """
+        This method handles the commands
+        """
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        if command == "all" or command == "all()":
+            self.do_all(class_name)
+        elif command == "count" or command == "count()":
+            self.do_count(class_name)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
