@@ -176,7 +176,18 @@ class HBNBCommand(cmd.Cmd):
         This method splits commands and disignates them to
         their proper channels
         """
-        if "." in cmd_line:
+        if "(" in cmd_line and ")" in cmd_line:
+            class_command, args = cmd_line.split('(')
+            class_name, command = class_command.split('.')
+            args = args.strip(')')
+            if class_name in self.classes and command in self.valid_commands:
+                if args:
+                    self.handle_commands(class_name, command, args)
+                else:
+                    self.handle_commands(class_name, command)
+            else:
+                print("Unknown syntax: {}".format(cmd_line))
+        elif "." in cmd_line:
             class_name, command = cmd_line.split('.')
             if class_name in self.classes and command in self.valid_commands:
                 self.handle_commands(class_name, command)
@@ -184,6 +195,7 @@ class HBNBCommand(cmd.Cmd):
                 print("Unknown syntax: {}".format(cmd_line))
         else:
             print("Unknown syntax: {}".format(cmd_line))
+
 
 
     def handle_commands(self, class_name, command):
@@ -194,9 +206,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        if command == "all":
+        if command == "all" or command == "all()":
             self.do_all(class_name)
-        elif command == "count":
+        elif command == "count" or command == "count()":
             self.do_count(class_name)
 
 if __name__ == '__main__':
