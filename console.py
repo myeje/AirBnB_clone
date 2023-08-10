@@ -106,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name.
         """
-        if model_type and model_type not in self.classes:
+        if model_type not in self.classes:
             print("** class doesn't exist **")
             return
 

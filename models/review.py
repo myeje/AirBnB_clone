@@ -16,5 +16,5 @@ class Review(BaseModel):
         text type(string)
     """
     place_id = ""
-    user.id = ""
+    user_id = ""
     text = ""
