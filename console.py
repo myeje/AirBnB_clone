@@ -163,6 +163,14 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, attribute_name, attribute_value)
             storage.save()
 
+    
+    def default(self, line):
+        """
+        This method is called on an input line
+        """
+        self.mode_commands(line)
+
+
     def mode_commands(self, cmd_line):
         """
         This method splits commands and disignates them to
