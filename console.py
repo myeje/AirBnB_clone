@@ -163,7 +163,11 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, attribute_name, attribute_value)
             storage.save()
 
-    def commands(self, cmd_line):
+    def mode_commands(self, cmd_line):
+        """
+        This method splits commands and disignates them to
+        their proper channels
+        """
         if "." in cmd_line:
             class_name, command = cmd_line.split('.')
             if class_name in self.classes and command in self.valid_commands:
@@ -173,7 +177,11 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("Unknown syntax: {}".format(cmd_line))
 
+
     def handle_commands(self, class_name, command):
+        """
+        This method handles the commands
+        """
         if class_name not in self.classes:
             print("** class doesn't exist **")
             return
