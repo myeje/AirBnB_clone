@@ -167,21 +167,21 @@ class HBNBCommand(cmd.Cmd):
         if "." in cmd_line:
             class_name, command = cmd_line.split('.')
             if class_name in self.classes and command in self.valid_commands:
-                self.handle_commands(class_name, command, args)
+                self.handle_commands(class_name, command)
             else:
                 print("Unknown syntax: {}".format(cmd_line))
         else:
-            print("Unkownk syntax: {}".format(cmd_line))
+            print("Unknown syntax: {}".format(cmd_line))
 
-    def handle_commands(self, class_name, command, args):
+    def handle_commands(self, class_name, command):
         if class_name not in self.classes:
             print("** class doesn't exist **")
             return
 
         if command == "all":
-            self.all_instance(class_name)
+            self.do_all(class_name)
         elif command == "count":
-            self.count_instance(class_name)
+            self.do_count(class_name)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
