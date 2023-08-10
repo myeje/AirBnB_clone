@@ -16,6 +16,7 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     prompt = ":) "
     classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    valid_commands = ["all", "count"]
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -106,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances based
         or not on the class name.
         """
-        if model_type and model_type not in self.classes:
+        if model_type not in self.classes:
             print("** class doesn't exist **")
             return
 
@@ -115,6 +116,13 @@ class HBNBCommand(cmd.Cmd):
             if not model_type or obj.__class__.__name__ == model_type:
                 ob.append(str(obj))
         print(ob)
+
+    def do_count(self, class_name):
+        """
+        Counts all instances of the class name
+        """
+        count = len([obj for obj in storage.all().values() if obj.__class__.__name__ == class_name])
+        print(count)
 
     def do_update(self, model_info):
         """
@@ -155,6 +163,25 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, attribute_name, attribute_value)
             storage.save()
 
+    def commands(self, cmd_line):
+        if "." in cmd_line:
+            class_name, command = cmd_line.split('.')
+            if class_name in self.classes and command in self.valid_commands:
+                self.handle_commands(class_name, command, args)
+            else:
+                print("Unknown syntax: {}".format(cmd_line))
+        else:
+            print("Unkownk syntax: {}".format(cmd_line))
+
+    def handle_commands(self, class_name, command, args):
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        if command == "all":
+            self.all_instance(class_name)
+        elif command == "count":
+            self.count_instance(class_name)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
