@@ -37,25 +37,25 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """Override emptyline to do nothing"""
-        pass
+        return False
 
     def help_quit(self):
         """
         Display help for the quit command.
         """
-        print("Quit the command interpreter")
+        print("Quit the command to exit the program\n")
 
     def help_EOF(self):
         """
         Display help for the EOF command.
         """
-        print("Exit the command interpreter using EOF (Ctrl+D)")
+        print("Exit the command interpreter using EOF (Ctrl+D)\n")
 
     def help_help(self):
         """
         Display help for the help command
         """
-        print("Show help for the available commands")
+        print("Show help for the available commands\n")
 
     def do_create(self, model_type="None"):
         """
