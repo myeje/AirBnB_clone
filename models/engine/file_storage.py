@@ -61,9 +61,13 @@ class FileStorage:
             "Place": Place,
             "Review": Review
         }
-        with open(FileStorage.__file_path, "r") as f:
-            data = json.load(f)
-            for key, value in data.items():
-                class_name = value['__class__']
-                obj = __cls[class_name](**value)
-                FileStorage.__objects[key] = obj
+        try:
+            with open(FileStorage.__file_path, "r") as f:
+                data = json.load(f)
+
+                for key, value in data.items():
+                    class_name = value['__class__']
+                    obj = __cls[class_name](**value)
+                    FileStorage.__objects[key] = obj
+        except FileNotFoundError:
+            pass

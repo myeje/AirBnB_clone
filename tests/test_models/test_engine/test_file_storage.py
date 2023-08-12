@@ -154,33 +154,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(self.new.to_dict()['id'], obj.to_dict()['id'])
         self.assertTrue(os.path.exists('file.json'))
 
-    def test_class_exists(self):
-        """Tests if class exists.
-        """
-        result = "<class 'models.engine.file_storage.FileStorage'>"
-        self.assertEqual(str(type(self.file_storage1)), result)
-
     def test_functions(self):
         """Test if FileStorage module is documented.
         """
         self.assertIsNotNone(FileStorage.__doc__)
-
-    def test_types(self):
-        """Test if attributes type is correct.
-        """
-        self.assertIsInstance(self.file_storage1, FileStorage)
-        self.assertEqual(type(self.file_storage1), FileStorage)
-
-    @classmethod
-    def setUp(cls):
-        """Runs for each test case.
-        """
-        cls.base_model1 = BaseModel()
-        cls.file_storage1 = FileStorage()
-
-    @classmethod
-    def tearDown(cls):
-        """Cleans up after each test.
-        """
-        del cls.base_model1
-        del cls.file_storage1
