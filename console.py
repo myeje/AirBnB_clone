@@ -33,12 +33,29 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """EOF command to exit the program (CTRL + D)"""
-        print()
         return True
 
     def emptyline(self):
         """Override emptyline to do nothing"""
         pass
+
+    def help_quit(self):
+        """
+        Display help for the quit command.
+        """
+        print("Quit the command interpreter")
+
+    def help_EOF(self):
+        """
+        Display help for the EOF command.
+        """
+        print("Exit the command interpreter using EOF (Ctrl+D)")
+
+    def help_help(self):
+        """
+        Display help for the help command
+        """
+        print("Show help for the available commands")
 
     def do_create(self, model_type="None"):
         """
