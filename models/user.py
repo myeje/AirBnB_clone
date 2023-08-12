@@ -6,6 +6,7 @@ A class User that inherits from BaseModel
 from models.base_model import BaseModel
 from models import storage
 
+
 class User(BaseModel):
     """
     A class User
@@ -20,11 +21,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
-    def __str__(self):
-        """
-        print:
-            [<class name>] (<self.id>) <self.__dict__>
-        """
-        class_name = self.__class__.__name__
-        return f"[{class_name}] ({self.id}) {self.__dict__}"
