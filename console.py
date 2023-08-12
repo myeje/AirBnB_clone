@@ -215,6 +215,8 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(class_name)
         elif command == "count" or command == "count()":
             self.do_count(class_name)
+        elif command == "show" or command == "show()":
+            self.do_show(class_name)
 
 
 if __name__ == '__main__':
