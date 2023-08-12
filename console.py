@@ -14,7 +14,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = ":) "
+    prompt = "(hbnb) "
     classes = [
         "BaseModel",
         "User",
