@@ -9,6 +9,9 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import json
+from io import StringIO
+from unittest.mock import patch
+from models.engine.file_storage import FileStorage
 """
 Unittest for Console
 """
