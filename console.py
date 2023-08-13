@@ -207,7 +207,7 @@ class HBNBCommand(cmd.Cmd):
                     m.append(v)
             print(len(m))
 
-    do help_count(self):
+    def help_count(self):
         """
         Display help for count command.
         """
