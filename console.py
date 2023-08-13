@@ -16,7 +16,7 @@ from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    classes = [
+    __cls = [
         "BaseModel",
         "User",
         "State",
@@ -65,12 +65,10 @@ class HBNBCommand(cmd.Cmd):
         """
         if not args:
             print("** class name missing **")
-            return
         arg = args.split()
-        if arg[0] not in self.classes:
+        if arg[0] not in self.__cls:
             print("** class doesn't exist **")
-            return
-        new = eval(arg[0])()
+        new = eval(f'{arg[0]}')()
         new.save()
         print(new.id)
 
@@ -99,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id.
         Usage: destroy User <id>
         """
-        self._validate_destroy(args, "destroy")
+        self._validate_show_and_destroy(args, "destroy")
 
     def help_destroy(self):
         """
@@ -119,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             for obj_key, obj in obj_dict.items():
                 print(obj)
-        elif args in self.classes:
+        elif args in self.__cls:
             for obj_key, obj in obj_dict.items():
                 if obj_key.split('.')[0] == args:
                     print(obj)
@@ -147,35 +145,41 @@ class HBNBCommand(cmd.Cmd):
         """
         print("Update an instance based on the class name and id")
 
-    def _validate_show_and_destroy(self, args, act):
-        if not args:
+    def _validate_show_and_destroy(self, arg, action):
+        """
+        Validates show and destroy method
+        """
+        if not arg:
             print(f"** class name missing **")
             return
-        arg = args.split()
-        if arg[0] not in self.classes:
+        args = arg.split()
+        if args[0] not in self.__cls:
             print("** class doesn't exist **")
             return
-        if len(arg) < 2:
-            print(f"** instance id missing **")
+        if len(args) < 2:
+            print(f"** {action} id missing **")
             return
         storage = FileStorage()
         obj_dict = storage.all()
-        obj_key = f"{arg[0]}.{arg[1]}"
+        obj_key = f"{args[0]}.{args[1]}"
         if obj_key not in obj_dict:
             print("** no instance found **")
             return
-        if act == "show":
+        if action == "show":
             print(obj_dict[obj_key])
-        elif act == "destroy":
+        elif action == "destroy":
             del obj_dict[obj_key]
             storage.save()
 
     def _validate_update(self, args):
+        """
+        validate update method
+        """
         if not args:
             print("** class name missing **")
             return
         arg = args.split()
-        if arg[0] not in self.classes:
+        if arg[0] not in self.__cls:
             print("** class doesn't  exist **")
             return
         if len(arg) < 2:
