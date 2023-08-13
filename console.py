@@ -157,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
               "or all instances of a specific class")
         print("Usage: all[class_name]")
 
-     def do_update(self, mode):
+    def do_update(self, mode):
         """
         methods to update an instance based on class name and
         id by adding or updating the attribute that saves the
