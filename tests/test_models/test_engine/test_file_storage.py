@@ -193,3 +193,16 @@ class TestFileStorage(unittest.TestCase):
         store = FileStorage()
         self.assertRaises(FileNotFoundError)
         store.reload()
+
+    def setUp(self):
+        self.file_storage1 = FileStorage()
+
+    def test_save(self):
+        """Test if save method is working correctly.
+        """
+        self.file_storage1.save()
+        self.assertEqual(os.path.exists(self.file_storage1._FileStorage__file_path), True)
+        self.assertEqual(self.file_storage1.all(), self.file_storage1._FileStorage__objects)
+
+if __name__ == '__main__':
+    unittest.main()
