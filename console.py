@@ -86,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
         Display the string representation of an instance.
         Usage: show User <id>
         """
-        self._validate_show_and_destroy(arg, "show")
+        self._validate_show_and_destroy(args, "show")
 
     def help_show(self):
         """
