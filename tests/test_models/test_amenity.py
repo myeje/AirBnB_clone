@@ -3,15 +3,14 @@ import unittest
 from models.base_model import BaseModel
 from models.amenity import Amenity
 """
-Unittest for class Amenity
+This is a unittest for class Amenity
 """
 
 
 class TestAmenity(unittest.TestCase):
-    """Testing with unittest"""
+    """Testing unittest"""
     def test_validate_format(self):
-        """
-        Test to validate the format that is string
+        """This is a test that validate the format that is string.
         """
         amenity1 = Amenity()
         self.assertIsInstance(amenity1.name, str)

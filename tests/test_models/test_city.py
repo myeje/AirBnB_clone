@@ -3,64 +3,58 @@ import unittest
 from models.base_model import BaseModel
 from models.city import City
 """
-Unittest for class City
+This is a unittest for class City
 """
 
 
 class TestCity(unittest.TestCase):
     """Testing with unittest"""
     def test_validate_format(self):
+        """This is a test that validate the format that is string
         """
-        Test to validate the format that is string
-        """
-        city1 = City()
-        self.assertIsInstance(city1.name, str)
-        self.assertIsInstance(city1.state_id, str)
+        metropolis = City()
+        self.assertIsInstance(metropolis.name, str)
+        self.assertIsInstance(metropolis.state_id, str)
 
     def test_City_is_Subclass(self):
+        """This is a test for BaseModel subclasses
         """
-        Test for BaseModel subclasses
-        """
-        city2 = City()
-        cl = city2.__class__
-        self.assertTrue(issubclass(cl, BaseModel))
+        metropolis = City()
+        pop = metropolis.__class__
+        self.assertTrue(issubclass(pop, BaseModel))
 
     def test_empty_string(self):
+        """This is a test that validate if it is empty
         """
-        Test to validate if it is empty
-        """
-        city3 = City()
-        self.assertEqual(city3.name, "")
-        self.assertEqual(city3.state_id, "")
+        metropolis = City()
+        self.assertEqual(metropolis.name, "")
+        self.assertEqual(metropolis.state_id, "")
 
     def test_representation_state(self):
+        """This is a test to validate the representation of the User class.
         """
-        Test to validate the representation of the User class
-        """
-        city4 = City()
-        dictionary = city4.__dict__
-        format_representation = "[{}] ({}) {}".format(city4.__class__.__name__,
-                                                      city4.id, dictionary)
-        self.assertEqual(format_representation, str(city4))
+        metropolis = City()
+        pop = metropolis.__dict__
+        lop = "[{}] ({}) {}".format(metropolis.__class__.__name__,
+                                                      metropolis.id, pop)
+        self.assertEqual(lop, str(metropolis))
 
     def test_create_City(self):
+        """This is a test that validate user creation.
         """
-        Test to validate user creation
-        """
-        city5 = City()
-        city5.name = "San Diego"
-        city5.state_id = "613-29-5287"
-        self.assertEqual(city5.name, "San Diego")
-        self.assertEqual(city5.state_id, "613-29-5287")
+        metropolis = City()
+        metropolis.name = "Rio de Janeiro"
+        metropolis.state_id = "0132-7890-6803"
+        self.assertEqual(metropolis.name, "Rio de Janeiro")
+        self.assertEqual(metropolis.state_id, "0132-7890-6803")
 
     def test_create_update_City(self):
+        """This is a test that validate attribute value change in update.
         """
-        Test to validate the attribute value change update.
-        """
-        city6 = City()
-        first = city6.name = "San Diego"
-        city6.state_id = "613-29-5285"
-        city6.save()
-        second = city6.name = "New Mexico"
-        city6.save()
-        self.assertNotEqual(first, second)
+        metropolis = City()
+        pop = metropolis.name = "Paris"
+        metropolis.state_id = "613-29-5285"
+        metropolis.save()
+        pop2 = metropolis.name = "Beijing"
+        metropolis.save()
+        self.assertNotEqual(pop, pop2)

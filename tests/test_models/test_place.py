@@ -1,113 +1,108 @@
 #!/usr/bin/python3
+
 import unittest
 from models.base_model import BaseModel
 from models.place import Place
 """
-Unittest for class Place
+This is a unittest for class Place.
 """
 
 
 class TestPlace(unittest.TestCase):
     """Testing with unittest"""
     def test_validate_format(self):
+        """This is test that validate format that is string.
         """
-        Test to validate the format that is string
-        """
-        place1 = Place()
-        self.assertIsInstance(place1.city_id, str)
-        self.assertIsInstance(place1.user_id, str)
-        self.assertIsInstance(place1.name, str)
-        self.assertIsInstance(place1.description, str)
-        self.assertIsInstance(place1.number_rooms, int)
-        self.assertIsInstance(place1.number_bathrooms, int)
-        self.assertIsInstance(place1.max_guest, int)
-        self.assertIsInstance(place1.price_by_night, int)
-        self.assertIsInstance(place1.latitude, float)
-        self.assertIsInstance(place1.longitude, float)
-        self.assertIsInstance(place1.amenity_ids, list)
+        pop = Place()
+        self.assertIsInstance(pop.city_id, str)
+        self.assertIsInstance(pop.user_id, str)
+        self.assertIsInstance(pop.name, str)
+        self.assertIsInstance(pop.description, str)
+        self.assertIsInstance(pop.number_rooms, int)
+        self.assertIsInstance(pop.number_bathrooms, int)
+        self.assertIsInstance(pop.max_guest, int)
+        self.assertIsInstance(pop.price_by_night, int)
+        self.assertIsInstance(pop.latitude, float)
+        self.assertIsInstance(pop.longitude, float)
+        self.assertIsInstance(pop.amenity_ids, list)
 
     def test_Place_is_Subclass(self):
+        """This is a test for BaseModel subclasses.
         """
-        Test for BaseModel subclasses
-        """
-        place2 = Place()
-        cl = place2.__class__
-        self.assertTrue(issubclass(cl, BaseModel))
+        pop = Place()
+        pp = pop.__class__
+        self.assertTrue(issubclass(pp, BaseModel))
 
     def test_empty_string(self):
+        """This is a test that validate if it is empty or zero.
         """
-        Test to validate if it is empty
-        """
-        place3 = Place()
-        self.assertEqual(place3.city_id, "")
-        self.assertEqual(place3.user_id, "")
-        self.assertEqual(place3.name, "")
-        self.assertEqual(place3.description, "")
-        self.assertEqual(place3.number_rooms, 0)
-        self.assertEqual(place3.number_bathrooms, 0)
-        self.assertEqual(place3.max_guest, 0)
-        self.assertEqual(place3.price_by_night, 0)
-        self.assertEqual(place3.latitude, 0.0)
-        self.assertEqual(place3.longitude, 0.0)
-        self.assertEqual(place3.amenity_ids, [])
+        pop = Place()
+        self.assertEqual(pop.city_id, "")
+        self.assertEqual(pop.user_id, "")
+        self.assertEqual(pop.name, "")
+        self.assertEqual(pop.description, "")
+        self.assertEqual(pop.number_rooms, 0)
+        self.assertEqual(pop.number_bathrooms, 0)
+        self.assertEqual(pop.max_guest, 0)
+        self.assertEqual(pop.price_by_night, 0)
+        self.assertEqual(pop.latitude, 0.0)
+        self.assertEqual(pop.longitude, 0.0)
+        self.assertEqual(pop.amenity_ids, [])
 
     def test_representation_place(self):
+        """This is a test that validate the representation of the User.
         """
-        Test to validate the representation of the User class
-        """
-        place4 = Place()
-        dictionary = place4.__dict__
-        format_representation = "[{}] ({}) {}".format(
-                place4.__class__.__name__, place4.id, dictionary)
-        self.assertEqual(format_representation, str(place4))
+        pop = Place()
+        dit = pop.__dict__
+        parse = "[{}] ({}) {}".format(
+                pop.__class__.__name__, pop.id, dit)
+        self.assertEqual(parse, str(pop))
 
     def test_create_Place(self):
+        """This is a test that validate user creation.
         """
-        Test to validate user creation
-        """
-        place5 = Place()
-        place5.city_id = "ChIJrTLr-GyuEmsRBfy61i59si0"
-        place5.user_id = "Elmo"
-        place5.name = "Holberton"
-        place5.description = "Innovative"
-        place5.number_rooms = "4"
-        place5.number_bathrooms = "1"
-        place5.max_guest = "28"
-        place5.price_by_night = "60"
-        place5.latitude = "-33.870775"
-        place5.longitude = "151.199025"
-        place5.amenity_ids = "hot tub, jacuzzi"
-        place5.save()
-        self.assertEqual(place5.city_id, "ChIJrTLr-GyuEmsRBfy61i59si0")
-        self.assertEqual(place5.user_id, "Elmo")
-        self.assertEqual(place5.name, "Holberton")
-        self.assertEqual(place5.description, "Innovative")
-        self.assertEqual(place5.number_rooms, "4")
-        self.assertEqual(place5.number_bathrooms, "1")
-        self.assertEqual(place5.max_guest, "28")
-        self.assertEqual(place5.price_by_night, "60")
-        self.assertEqual(place5.latitude, "-33.870775")
-        self.assertEqual(place5.longitude, "151.199025")
-        self.assertEqual(place5.amenity_ids, "hot tub, jacuzzi")
+        pop = Place()
+        pop.city_id = "758mt9-2314-5678-901fh2"
+        pop.user_id = "Pope"
+        pop.name = "Gabriel"
+        pop.description = "Simple"
+        pop.number_rooms = "3"
+        pop.number_bathrooms = "2"
+        pop.max_guest = "20"
+        pop.price_by_night = "30"
+        pop.latitude = "6.789034"
+        pop.longitude = "51.19905"
+        pop.amenity_ids = "heater, soap"
+        pop.save()
+        self.assertEqual(pop.city_id, "758mt9-2314-5678-901fh2")
+        self.assertEqual(pop.user_id, "Pope")
+        self.assertEqual(pop.name, "Gabriel")
+        self.assertEqual(pop.description, "Simple")
+        self.assertEqual(pop.number_rooms, "3")
+        self.assertEqual(pop.number_bathrooms, "2")
+        self.assertEqual(pop.max_guest, "20")
+        self.assertEqual(pop.price_by_night, "30")
+        self.assertEqual(pop.latitude, "6.789034")
+        self.assertEqual(pop.longitude, "51.19905")
+        self.assertEqual(pop.amenity_ids, "heater, soap")
 
     def test_create_update_Place(self):
+        """This is a test that validate attribute value change in update.
         """
-        Test to validate the attribute value change update.
-        """
-        place6 = Place()
-        place6.city_id = "ChIJrTLr-GyuEmsRBfy61i59si0"
-        place6.user_id = "Paolo"
-        place6.name = "Huaral"
-        first = place6.description = "Perfect"
-        place6.number_rooms = "1"
-        place6.number_bathrooms = "1"
-        place6.max_guest = "6"
-        place6.price_by_night = "40"
-        place6.latitude = "-33.870775"
-        place6.longitude = "151.199025"
-        first_amenity = place6.amenity_ids = "good music"
-        place6.save()
-        second = place6.description = "Sus"
-        second_amenity = place6.amenity_ids = "nothing interesting"
-        self.assertNotEqual(first, second)
-        self.assertNotEqual(first_amenity, second_amenity)
+        pop = Place()
+        pop.city_id = "ChIJrTLr-GyuEmsRBfy61i59si0"
+        pop.user_id = "Paolo"
+        pop.name = "Huaral"
+        lopp = pop.description = "Perfect"
+        pop.number_rooms = "1"
+        pop.number_bathrooms = "2"
+        pop.max_guest = "8"
+        pop.price_by_night = "40"
+        pop.latitude = "-33.870775"
+        pop.longitude = "151.199025"
+        pop_amenity = pop.amenity_ids = "good music"
+        pop.save()
+        lop = pop.description = "Sus"
+        pop2_amenity = pop.amenity_ids = "nothing interesting"
+        self.assertNotEqual(lopp, lop)
+        self.assertNotEqual(pop_amenity, pop2_amenity)

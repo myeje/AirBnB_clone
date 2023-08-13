@@ -3,69 +3,63 @@ import unittest
 from models.base_model import BaseModel
 from models.review import Review
 """
-Unittest for class Review
+This is a unittest for class Review
 """
 
 
 class TestReview(unittest.TestCase):
-    """Testing with unittest"""
+    """Testing unittest"""
     def test_validate_format(self):
+        """This is a test that validate the format that is string
         """
-        Test to validate the format that is string
-        """
-        review1 = Review()
-        self.assertIsInstance(review1.place_id, str)
-        self.assertIsInstance(review1.user_id, str)
-        self.assertIsInstance(review1.text, str)
+        examine = Review()
+        self.assertIsInstance(examine.place_id, str)
+        self.assertIsInstance(examine.user_id, str)
+        self.assertIsInstance(examine.text, str)
 
     def test_review_is_Subclass(self):
+        """This is a test for BaseModel subclasses
         """
-        Test for BaseModel subclasses
-        """
-        review2 = Review()
-        cl = review2.__class__
-        self.assertTrue(issubclass(cl, BaseModel))
+        examine = Review()
+        pop = examine.__class__
+        self.assertTrue(issubclass(pop, BaseModel))
 
     def test_empty_string(self):
+        """This is a test that validate if it is empty.
         """
-        Test to validate if it is empty
-        """
-        review3 = Review()
-        self.assertEqual(review3.place_id, "")
-        self.assertEqual(review3.user_id, "")
-        self.assertEqual(review3.text, "")
+        examine = Review()
+        self.assertEqual(examine.place_id, "")
+        self.assertEqual(examine.user_id, "")
+        self.assertEqual(examine.text, "")
 
     def test_representation_review(self):
+        """This is a test to validate the  representation of the User.
         """
-        Test to validate the representation of the User class
-        """
-        review4 = Review()
-        dictionary = review4.__dict__
-        format_representation = "[{}] ({}) {}".format(
-                review4.__class__.__name__, review4.id, dictionary)
-        self.assertEqual(format_representation, str(review4))
+        examine = Review()
+        pop = examine.__dict__
+        lop = "[{}] ({}) {}".format(
+                examine.__class__.__name__, examine.id, pop)
+        self.assertEqual(lop, str(examine))
 
     def test_create_Review(self):
+        """This is a test that validate user creation
         """
-        Test to validate user creation
-        """
-        review5 = Review()
-        review5.place_id = "ChIJrTLr-GyuEmsRBfy61i59si0"
-        review5.user_id = "fole"
-        review5.text = "Amazing place"
-        self.assertEqual(review5.place_id, "ChIJrTLr-GyuEmsRBfy61i59si0")
-        self.assertEqual(review5.user_id, "fole")
-        self.assertEqual(review5.text, "Amazing place")
+        examine = Review()
+        examine.place_id = "Ch7fuy7u-hs7t-djte67udy"
+        examine.user_id = "lovebug"
+        examine.text = "Stunning place"
+        self.assertEqual(examine.place_id, "Ch7fuy7u-hs7t-djte67udy")
+        self.assertEqual(examine.user_id, "lovebug")
+        self.assertEqual(examine.text, "Stunning place")
 
     def test_create_update_Review(self):
+        """Test that validate attribute value change in update.
         """
-        Test to validate the attribute value change update.
-        """
-        review6 = Review()
-        review6.place_id = "ChIJrTLr-GyuEmsRBfy6155si0"
-        review6.name = "gura"
-        first = review6.text = "Awful experience"
-        review6.save()
-        second = review6.text = "Wonderful experience"
-        review6.save()
-        self.assertNotEqual(first, second)
+        examine = Review()
+        examine.place_id = "Ch7fuy7u-hs7t-djte67udy"
+        examine.name = "Grace"
+        pop = examine.text = "Great experience"
+        examine.save()
+        pop2 = examine.text = "Worst experience"
+        examine.save()
+        self.assertNotEqual(pop, pop2)

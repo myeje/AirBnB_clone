@@ -3,78 +3,72 @@ import unittest
 from models.base_model import BaseModel
 from models.user import User
 """
-Unittest for class User
+This is a unittest for class User
 """
 
 
 class TestUser(unittest.TestCase):
-    """Testing with unittest"""
+    """Testing unittest"""
     def test_validate_format(self):
+        """This is a test that validate the format that is string
         """
-        Test to validate the format that is string
-        """
-        user1 = User()
-        self.assertIsInstance(user1.email, str)
-        self.assertIsInstance(user1.password, str)
-        self.assertIsInstance(user1.first_name, str)
-        self.assertIsInstance(user1.last_name, str)
+        client = User()
+        self.assertIsInstance(client.email, str)
+        self.assertIsInstance(client.password, str)
+        self.assertIsInstance(client.first_name, str)
+        self.assertIsInstance(client.last_name, str)
 
     def test_User_is_Subclass(self):
+        """This is a test for BaseModel subclasses
         """
-        Test for BaseModel subclasses
-        """
-        user2 = User()
-        cl = user2.__class__
-        self.assertTrue(issubclass(cl, BaseModel))
+        client = User()
+        pop = client.__class__
+        self.assertTrue(issubclass(pop, BaseModel))
 
     def test_empty_string(self):
+        """This is test that validate if it is empty.
         """
-        Test to validate if it is empty
-        """
-        user3 = User()
-        self.assertEqual(user3.email, "")
-        self.assertEqual(user3.password, "")
-        self.assertEqual(user3.first_name, "")
-        self.assertEqual(user3.last_name, "")
+        client = User()
+        self.assertEqual(client.email, "")
+        self.assertEqual(client.password, "")
+        self.assertEqual(client.first_name, "")
+        self.assertEqual(client.last_name, "")
 
     def test_representation_user(self):
+        """This is a test that validate the representation of the User.
         """
-        Test to validate the representation of the User class
-        """
-        user4 = User()
-        dictionary = user4.__dict__
-        format_representation = "[{}] ({}) {}".format(user4.__class__.__name__,
-                                                      user4.id, dictionary)
-        self.assertEqual(format_representation, str(user4))
+        client = User()
+        pop = client.__dict__
+        lop = "[{}] ({}) {}".format(client.__class__.__name__,
+                                                      client.id, pop)
+        self.assertEqual(lop, str(client))
 
     def test_create_User(self):
+        """This is a test that validate user creation.
         """
-        Test to validate user creation
-        """
-        user5 = User()
-        user5.email = "gerardomarinparra18@gmail.com"
-        user5.password = "123456"
-        user5.first_name = "Gerardo1"
-        user5.last_name = "Marin"
-        user5.save()
-        self.assertEqual(user5.email, "gerardomarinparra18@gmail.com")
-        self.assertEqual(user5.password, "123456")
-        self.assertEqual(user5.first_name, "Gerardo1")
-        self.assertEqual(user5.last_name, "Marin")
+        client = User()
+        client.email = "deosundeola12@gmail.com"
+        client.password = "12345"
+        client.first_name = "Oluwaseyi"
+        client.last_name = "Adeosun"
+        client.save()
+        self.assertEqual(client.email, "deosundeola12@gmail.com")
+        self.assertEqual(client.password, "12345")
+        self.assertEqual(client.first_name, "Oluwaseyi")
+        self.assertEqual(client.last_name, "Adeosun")
 
     def test_create_update_User(self):
+        """This is a test that validate attribute value change in update.
         """
-        Test to validate the attribute value change update.
-        """
-        user6 = User()
-        user6.email = "dhannaps03@gmail.com"
-        first = user6.password = "987654"
-        user6.first_name = "Dhanna"
-        user6.last_name = "Palomino"
-        first_date = user6.updated_at
-        user6.save()
-        second = user6.password = "123456"
-        second_date = user6.updated_at
-        user6.save()
-        self.assertNotEqual(first, second)
-        self.assertNotEqual(first_date, second_date)
+        client = User()
+        client.email = "ehimareemore67@gmail.com"
+        pop = client.password = "56789"
+        client.first_name = "Joshua"
+        client.last_name = "Emore"
+        update2 = client.updated_at
+        client.save()
+        pop2 = client.password = "123345"
+        update1 = client.updated_at
+        client.save()
+        self.assertNotEqual(pop, pop2)
+        self.assertNotEqual(update1, update2)
