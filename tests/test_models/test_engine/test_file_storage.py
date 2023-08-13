@@ -19,6 +19,7 @@ class TestFileStorage(unittest.TestCase):
     """
     Testitng with unittest
     """
+    pass
 
     def test_all(self):
         """
