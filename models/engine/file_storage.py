@@ -53,9 +53,22 @@ class FileStorage:
         """
         Deserializes the JSON file to __objects
         """
-        if os.path.isfile(self.__file_path):
-            with open(self.__file_path, "r", encoding="utf-8") as myFile:
-                deserializa = json.load(myFile)
-                for keys, values in deserializa.items():
-                    name_class = eval(values["__class__"])
-                    self.__objects[keys] = name_class(**values)
+        __cls = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+        }
+        try:
+            with open(FileStorage.__file_path, "r") as f:
+                data = json.load(f)
+                for key, value in data.items():
+                    class_name = value['__class__']
+
+                    obj = __cls[class_name](**value)
+                    FileStorage.__objects[key] = obj
+        except FileNotFoundError:
+            pass
