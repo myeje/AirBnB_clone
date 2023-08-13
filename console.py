@@ -163,29 +163,28 @@ class HBNBCommand(cmd.Cmd):
         id by adding or updating the attribute that saves the
         change in the json file
         """
-        args = mode.split(".")
-        parse = args[1].split("(")
-        parse_line = parse[1].split(")")
-        new_line = parse_line[0].split(",")
-        if args[0] in self.__cls:
-            if args[1] == "all()":
-                mode_cls = args[0]
-                return self.do_all(mode_cls)
-            elif args[1] == "count()":
-                mode_cls = args[0]
-                return self.do_count(mode_cls)
-            elif args[1][0:4] == 'show':
-                mode_cls = args[0] + " " + parse_line[0]
-                return self.do_show(mode_cls)
-            elif args[1][0:7] == 'destroy':
-                mode_cls = args[0] + " " + parse_line[0]
-                return self.do_destroy(mode_cls)
-            elif args[1][0:6] == "update":
-                mode_cls = (
-                    args[0] + " " + new_line[0] + "" +
-                    new_line[1] + "" + new_line[2]
-                )
-                return self.do_update(mode_cls)
+        args = mode.split(" ")
+        if mode == '':
+            print("** class name missing **")
+        elif args[0] not in self.__cls:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            obj_dict = storage.all()
+            char = "{}.{}".format(args[0], args[1])
+            if char not in obj_dict:
+                print("** no instance found **")
+            elif len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 3:
+                print("** value missing **")
+            else:
+                m = ["id", "created_at", "updated_at"]
+                if args[2] not in m:
+                    for key, value in obj_dict.items():
+                        setattr(value, args[2], eval(args[3]))
+                        value.save()
 
     def help_update(self):
         """
@@ -216,8 +215,8 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, mode):
         """
-        cmd method to validate and parse when it does not
-        recognize command syntax
+        cmd method to validate when it does not
+        recognize the prefix of the command.
         """
         args = mode.split(".")
         parse = args[1].split("(")
