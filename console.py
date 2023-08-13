@@ -215,8 +215,8 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, mode):
         """
-        cmd method to validate when it does not
-        recognize the prefix of the command.
+        cmd method to validate and parse when it does not
+        recognize command syntax
         """
         args = mode.split(".")
         parse = args[1].split("(")
