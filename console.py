@@ -16,7 +16,7 @@ from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
-    __cls = {
+    classes = [
         "BaseModel",
         "User",
         "State",
@@ -24,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
         "Amenity",
         "Place",
         "Review"
-    }
+    ]
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """EOF command to exit the program (CTRL + D)"""
-        print()
+        print("")
         return True
 
     def emptyline(self):
@@ -65,10 +65,12 @@ class HBNBCommand(cmd.Cmd):
         """
         if not args:
             print("** class name missing **")
+            return
         arg = args.split()
-        if arg[0] not in self.__cls:
+        if arg[0] not in self.classes:
             print("** class doesn't exist **")
-        new = eval(f'{arg[0]}')()
+            return
+        new = eval(arg[0])()
         new.save()
         print(new.id)
 
@@ -84,23 +86,26 @@ class HBNBCommand(cmd.Cmd):
         Display the string representation of an instance.
         Usage: show User <id>
         """
-        if args:
-            arg = self.parseline(args)
-            pal = arg[0]
-            obj_id = arg[1]
-            if pal not in self.__cls:
-                print("** class doesn't exist **")
-            elif not obj_id:
-                print("** instance id missing **")
-            else:
-                obj_key = f'{pal}.{obj_id}'
-                obj_dict = storage.all()
-                if obj_key in obj_dict.keys():
-                    print(obj_dict[obj_key])
-                else:
-                    print("** no instance found **")
-        else:
-            print("** class name missing **")
+        if not args:
+            print(f"** class name missing **")
+            return
+        arg = args.split()
+        if arg[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(arg) < 2:
+            print(f"** instance id missing **")
+            return
+        storage = FileStorage()
+        obj_dict = storage.all()
+        obj_key = f"{arg[0]}.{arg[1]}"
+        if obj_key not in obj_dict:
+            print("** no instance found **")
+            return
+        print(obj_dict[obj_key])
+        if act == "show":
+            print(obj_dict[obj_key])
+            storage.save()
 
     def help_show(self):
         """
@@ -113,24 +118,7 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id.
         Usage: destroy User <id>
         """
-        if args:
-            arg = self.parseline(args)
-            pal = arg[0]
-            obj_id = arg[1]
-            if pal not in self.__cls:
-                print("** class doesn't exist **")
-            elif not obj_id:
-                print("** instance id missing **")
-            else:
-                obj_key = f'{pal}.{obj_id}'
-                obj_dict = storage.all()
-                if obj_key in obj_dict.keys():
-                    del obj_dict[obj_key]
-                    storage.save()
-                else:
-                    print("** no instance found **")
-        else:
-            print("** class name missing **")
+        self._validate_destroy(args, "destroy")
 
     def help_destroy(self):
         """
@@ -146,11 +134,10 @@ class HBNBCommand(cmd.Cmd):
         """
         storage = FileStorage()
         obj_dict = storage.all()
-
         if not args:
             for obj_key, obj in obj_dict.items():
                 print(obj)
-        elif args in self.__cls:
+        elif args in self.classes:
             for obj_key, obj in obj_dict.items():
                 if obj_key.split('.')[0] == args:
                     print(obj)
@@ -178,15 +165,33 @@ class HBNBCommand(cmd.Cmd):
         """
         print("Update an instance based on the class name and id")
 
+    def _validate_destroy(self, args, act):
+        if not args:
+            print(f"** class name missing **")
+            return
+        arg = args.split()
+        if arg[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(arg) < 2:
+            print(f"** instance id missing **")
+            return
+        storage = FileStorage()
+        obj_dict = storage.all()
+        obj_key = f"{arg[0]}.{arg[1]}"
+        if obj_key not in obj_dict:
+            print("** no instance found **")
+            return
+        if act == "destroy":
+            del obj_dict[obj_key]
+            storage.save()
+
     def _validate_update(self, args):
-        """
-        validate update method
-        """
         if not args:
             print("** class name missing **")
             return
         arg = args.split()
-        if arg[0] not in self.__cls:
+        if arg[0] not in self.classes:
             print("** class doesn't  exist **")
             return
         if len(arg) < 2:
