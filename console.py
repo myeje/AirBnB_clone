@@ -180,23 +180,11 @@ class HBNBCommand(cmd.Cmd):
             elif len(args) == 3:
                 print("** value missing **")
             else:
-                obj = obj_dict[char]
-                attribute_name = args[2]
-
-                if args[-1][0] == "{" and args[-1][-1] == "}":
-                    try:
-                        data = json.loads(' '.join(args[3:]))
-                        for key, value in data.items():
-                            setattr(obj, key, value)
-                        storage.save()
-                    except Exception as e:
-                        print("** invalid dictionary representation **")
-                else:
-                    if args[3][0] == '"' and args[3][-1] == '"':
-                        setattr(obj, attribute_name, args[3][1:-1])
-                    else:
-                        setattr(obj, attribute_name, args[3])
-                    storage.save()
+                m = ["id", "created_at", "updated_at"]
+                if args[2] not in m:
+                    for key, value in obj_dict.items():
+                        setattr(value, args[2], eval(args[3]))
+                        value.save()
 
     def help_update(self):
         """
