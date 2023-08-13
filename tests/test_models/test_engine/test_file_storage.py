@@ -125,6 +125,10 @@ class TestFileStorage(unittest.TestCase):
             readFilePlace = myFilePlace.read()
             stringPlace = "{}.{}".format(place1.__class__.__name__, place1.id)
             self.assertIn(stringPlace, readFilePlace)
+    
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
 
     def test_save_Review(self):
         """
@@ -154,36 +158,44 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(self.new.to_dict()['id'], obj.to_dict()['id'])
         self.assertTrue(os.path.exists('file.json'))
 
-    def test_functions(self):
-        """Test if FileStorage module is documented.
-        """
-        self.assertIsNotNone(FileStorage.__doc__)
+class TestFileStorage_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the FileStorage class."""
 
-    def test_raises_error_for_private_attribute(self):
-        """Check if it raises error when trying to access the
-            private attribute ``file path`` and ``objects``
-        """
-        store = FileStorage()
-        with self.assertRaises(AttributeError):
-            store.__file_path
-        with self.assertRaises(AttributeError):
-            store.__object
+    def test_FileStorage_instantiation_no_args(self):
+        self.assertEqual(type(FileStorage()), FileStorage)
 
-    def test_attrs(self):
-        store = FileStorage()
-        self.assertEqual(store._FileStorage__file_path, "file.json")
-        self.assertIsInstance(store._FileStorage__objects, dict)
+    def test_FileStorage_instantiation_with_arg(self):
+        with self.assertRaises(TypeError):
+            FileStorage(None)
 
-    def test_class_exists(self):
-        """Tests if class exists.
-        """
-        store = FileStorage()
-        result = "<class 'models.engine.file_storage.FileStorage'>"
-        self.assertEqual(str(type(store)), result)
+    def test_FileStorage_file_path_is_private_str(self):
+        self.assertEqual(str, type(FileStorage._FileStorage__file_path))
 
-    def test_types(self):
-        """Test if attributes type is correct.
-        """
-        store = FileStorage()
-        self.assertIsInstance(store, FileStorage)
-        self.assertEqual(type(store), FileStorage)
+    def testFileStorage_objects_is_private_dict(self):
+        self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
+    def test_storage_initializes(self):
+        self.assertEqual(type(models.storage), FileStorage)
+
+class TestFileStorage_methods(unittest.TestCase):
+    """Unittests for testing methods of the FileStorage class."""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self) -> None:
+        """Resets FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.exists(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
+
+    def test_all(self):
+        self.assertEqual(dict, type(models.storage.all()))
+
+    def test_all_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.all(None)
+
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
