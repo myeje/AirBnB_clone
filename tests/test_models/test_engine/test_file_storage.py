@@ -174,5 +174,16 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(store._FileStorage__file_path, "file.json")
         self.assertIsInstance(store._FileStorage__objects, dict)
 
-if __name__ == '__main__':
-    unittest.main
+    def test_class_exists(self):
+        """Tests if class exists.
+        """
+        store = FileStorage()
+        result = "<class 'models.engine.file_storage.FileStorage'>"
+        self.assertEqual(str(type(store)), result)
+
+    def test_types(self):
+        """Test if attributes type is correct.
+        """
+        store = FileStorage()
+        self.assertIsInstance(store, FileStorage)
+        self.assertEqual(type(store), FileStorage)
