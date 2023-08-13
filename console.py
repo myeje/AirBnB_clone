@@ -95,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj_key = f'{pal}.{obj_id}'
                 obj_dict = storage.all()
-                if obj_key in obj_dict.obj_keys():
+                if obj_key in obj_dict.keys():
                     print(obj_dict[obj_key])
                 else:
                     print("** no instance found **")
@@ -124,8 +124,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj_key = f'{pal}.{obj_id}'
                 obj_dict = storage.all()
-                if key in obj_dict.obj_keys():
-                    del obj_dict[obj_key])
+                if obj_key in obj_dict.keys():
+                    del obj_dict[obj_key]
                     storage.save()
                 else:
                     print("** no instance found **")
