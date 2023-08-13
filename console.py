@@ -86,7 +86,28 @@ class HBNBCommand(cmd.Cmd):
         Display the string representation of an instance.
         Usage: show User <id>
         """
-        self._validate_show_and_destroy(args, "destroy")
+        if not args:
+            print(f"** class name missing **")
+            return
+        arg = args.split()
+        if arg[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(arg) < 2:
+            print(f"** instance id missing **")
+            return
+        storage = FileStorage()
+        obj_dict = storage.all()
+        obj_key = f"{arg[0]}.{arg[1]}"
+        if obj_key not in obj_dict:
+            print("** no instance found **")
+            return
+        print(obj_dict[obj_key])
+        if act == "show":
+            print(obj_dict[obj_key])
+        elif act == "destroy":
+            del obj_dict[obj_key]
+            storage.save()
 
     def help_show(self):
         """
@@ -99,7 +120,7 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id.
         Usage: destroy User <id>
         """
-        self._validate_show_and_destroy(args, "destroy")
+        self._validate_destroy(args, "destroy")
 
     def help_destroy(self):
         """
@@ -146,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
         """
         print("Update an instance based on the class name and id")
 
-    def _validate_show_and_destroy(self, args, act):
+    def _validate_destroy(self, args, act):
         if not args:
             print(f"** class name missing **")
             return
@@ -163,7 +184,6 @@ class HBNBCommand(cmd.Cmd):
         if obj_key not in obj_dict:
             print("** no instance found **")
             return
-        print(obj_dict[obj_key])
         if act == "show":
             print(obj_dict[obj_key])
         elif act == "destroy":
