@@ -105,8 +105,6 @@ class HBNBCommand(cmd.Cmd):
         print(obj_dict[obj_key])
         if act == "show":
             print(obj_dict[obj_key])
-        elif act == "destroy":
-            del obj_dict[obj_key]
             storage.save()
 
     def help_show(self):
@@ -184,9 +182,7 @@ class HBNBCommand(cmd.Cmd):
         if obj_key not in obj_dict:
             print("** no instance found **")
             return
-        if act == "show":
-            print(obj_dict[obj_key])
-        elif act == "destroy":
+        if act == "destroy":
             del obj_dict[obj_key]
             storage.save()
 
