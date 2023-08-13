@@ -192,20 +192,26 @@ class HBNBCommand(cmd.Cmd):
         """
         print("Update an instance based on the class name and id")
     
-    """
-    def do_count(self, arg):
-     #Instance counter according to class
-        args = arg.split(" ")
-        if arg not in self.__classes:
+    def do_count(self, mode):
+        """
+        Instance counter according to class.
+        """
+        args = mode.split(" ")
+        if mode not in self.__cls:
             print("** class doesn't exist **")
         else:
-            list_new = []
-            list_dictionary = storage.all()
-            for key, value in list_dictionary.items():
-                if args[0] in key:
-                    list_new.append(value)
-            print(len(list_new))
-    """
+            m = []
+            d_l = storage.all()
+            for k, v in d_l.items():
+                if args[0] in k:
+                    m.append(v)
+            print(len(m))
+
+    do help_count(self):
+        """
+        Display help for count command.
+        """
+        print("Display an the number of instances of a class")
 
     def default(self, mode):
         """
