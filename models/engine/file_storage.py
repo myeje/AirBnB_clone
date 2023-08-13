@@ -13,7 +13,7 @@ from models.place import Place
 from models.review import Review
 
 
-class FileStorage():
+class FileStorage:
     """
     Serializes instances to a JSON file and deserializes JSON file.
 
@@ -64,9 +64,9 @@ class FileStorage():
         try:
             with open(FileStorage.__file_path, "r") as f:
                 data = json.load(f)
-
                 for key, value in data.items():
                     class_name = value['__class__']
+
                     obj = __cls[class_name](**value)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:

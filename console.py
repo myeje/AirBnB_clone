@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""
-Class console command that opens cmd interface to edit and update files
-"""
+"""creating the command interpreter"""
+
+
 import cmd
 from models import storage
 from models.base_model import BaseModel
@@ -11,163 +11,167 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+import json
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = ":) "
-    classes = [
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Amenity",
-        "Place",
-        "Review"
-    ]
-    valid_commands = ["all", "count"]
+    """
+    the console
+    """
+    prompt = "(hbnb) "
 
-    def do_quit(self, args):
-        """Quit command to exit the program
-        """
-        return True
-
-    def do_EOF(self, args):
-        """EOF command to exit the program (CTRL + D)"""
-        print()
-        return True
+    __cls = [
+        'BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review'
+        ]
 
     def emptyline(self):
         """Override emptyline to do nothing"""
         pass
 
-    def do_create(self, model_type="None"):
+    def do_quit(self, arg):
+        """Quit command to exit the program
         """
-        Creates a new instance of BaseModel saves it
-        (to the JSON file) and prints the id.
+        return True
+
+    def do_EOF(self, arg):
+        """EOF command to exit the program (CTRL + D)
         """
-        if not model_type:
+        print()
+        return True
+
+    def help_quit(self):
+        """
+        Display help for the quit command.
+        """
+        print("Quit command used to exit the program\n")
+        print()
+
+    def help_EOF(self):
+        """
+        Display help for the EOF command.
+        """
+        print("Exit the command interpreter using EOF (Ctrl+D)\n")
+
+    def help_help(self):
+        """
+        Display help for the help command
+        """
+        print("Show help for the available commands\n")
+
+    def do_create(self, mode):
+        """
+        Create a new instance of User and saves it to a JSON file.
+        Usage: create User.
+        """
+        if mode == "":
             print("** class name missing **")
-        elif model_type not in self.classes:
+        elif mode not in self.__cls:
             print("** class doesn't exist **")
         else:
-            new_model = eval(model_type)()
-            new_model.save()
-            print(new_model.id)
+            new = eval(mode)()
+            new.save()
+            print(new.id)
 
-    def do_show(self, model_key=None):
+    def help_create(self):
         """
-        Prints the string representation of an instance
-        based on the class name and id.
+        Display the help for the create command.
         """
-        if not model_key:
+        print("Create a new instance of a specified"
+              "class and save it to a JSON file")
+
+    def do_show(self, mode):
+        """
+        Display the string representation of an instance.
+        Usage: show User <id>
+        """
+        args = mode.split(" ")
+        if mode == '':
             print("** class name missing **")
-            return
-
-        args = model_key.split()
-        if len(args) < 2:
+        elif args[0] not in self.__cls:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-
-        class_name = args[0]
-        model_id = args[1]
-
-        if class_name not in self.classes:
-            print("** class doesn't exist **")
-            return
-
-        obj_key = f"{class_name}.{model_id}"
-        obj = storage.all().get(obj_key)
-        if obj is None:
-            print("** no instance found **")
         else:
-            print(obj)
+            obj_dict = storage.all()
+            char = "{}.{}".format(args[0], args[1])
+            if char not in obj_dict:
+                print("** no instance found **")
+            else:
+                print("{}".format(obj_dict[char]))
 
-    def do_destroy(self, model_key=None):
+    def help_show(self):
         """
-        Deletes an instance based on the class name and id
+        Display help for the show command.
         """
-        if not model_key:
+        print("Display the string representation of an instance")
+
+    def do_destroy(self, mode):
+        """removes an instance based on class
+           name, ID and saves it to a json file"""
+        args = mode.split(" ")
+        if mode == '':
             print("** class name missing **")
-            return
-
-        args = model_key.split()
-        if len(args) < 2:
+        elif args[0] not in self.__cls:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-
-        class_name = args[0]
-        model_id = args[1]
-
-        if class_name not in self.classes:
-            print("** class doesn't exist **")
-            return
-
-        obj_key = f"{class_name}.{model_id}"
-        obj = storage.all().get(obj_key)
-        if obj is None:
-            print("** no instance found **")
         else:
-            del storage.all()[obj_key]
-            storage.save()
+            obj_dict = storage.all()
+            char = "{}.{}".format(args[0], args[1])
+            if char not in obj_dict:
+                print("** no instance found **")
+            else:
+                del (obj_dict[char])
+                storage.save()
 
-    def do_all(self, model_type=""):
+    def help_destroy(self):
         """
-        Prints all string representation of all instances based
-        or not on the class name.
+        Display help for the destroy command.
         """
-        if model_type not in self.classes:
+        print("Delete an instance based on the class name and id")
+
+    def do_all(self, mode):
+        """
+        methods that prints all string representations
+        of all instances based or not on class name
+        """
+        m = []
+        aldir = storage.all()
+        if mode == "":
+            for key, value in aldir.items():
+                m.append(str(value))
+            print(m)
+        elif mode in self.__cls:
+            for key, value in aldir.items():
+                if value.__class__.__name__ == mode:
+                    m.append(str(value))
+            print(m)
+        else:
             print("** class doesn't exist **")
-            return
 
-        ob = []
-        for key, obj in storage.all().items():
-            if not model_type or obj.__class__.__name__ == model_type:
-                ob.append(str(obj))
-        print(ob)
+    def help_all(self):
+        """
+        Display help for all command
+        """
+        print("Display string representations of all instances,"
+              "or all instances of a specific class")
+        print("Usage: all[class_name]")
 
-    def do_count(self, class_name):
+    def do_update(self, mode):
         """
-        Counts all instances of the class name
+        methods to update an instance based on class name and
+        id by adding or updating the attribute that saves the
+        change in the json file
         """
-        count = len([obj for obj in storage.all().values()
-                     if obj.__class__.__name__ == class_name])
-        print(count)
-
-    def do_update(self, model_info):
-        """
-        Updates an instance based on the class name and id by adding
-        or updating attribute (save the change into the JSON file).
-        """
-        args = model_info.split()
-        if len(args) < 3:
+        args = mode.split(" ")
+        if mode == '':
             print("** class name missing **")
-            return
-
-        class_name = args[0]
-        model_id = args[1]
-        attribute_name = args[2]
-
-        if class_name not in self.classes:
+        elif args[0] not in self.__cls:
             print("** class doesn't exist **")
-            return
-
-        if len(args) < 3:
+        elif len(args) == 1:
             print("** instance id missing **")
-            return
-
-        if len(args) < 4:
-            print("** attribute name missing **")
-            return
-
-        if len(args) < 5:
-            print("** value missing **")
-            return
-
-        obj_key = f"{class_name}.{model_id}"
-        obj = storage.all().get(obj_key)
-        if obj is None:
-            print("** no instance found **")
         else:
+
             attribute_value = " ".join(args[3:])
             setattr(obj, attribute_name, attribute_value)
             storage.save()
@@ -188,45 +192,76 @@ class HBNBCommand(cmd.Cmd):
         """
         self.mode_commands(line)
 
-    def mode_commands(self, cmd_line):
-        """
-        This method splits commands and disignates them to
-        their proper channels
-        """
-        if "(" in cmd_line and ")" in cmd_line:
-            class_command, args = cmd_line.split('(')
-            class_name, command = class_command.split('.')
-            args = args.strip(')')
-            if class_name in self.classes and command in self.valid_commands:
-                if args:
-                    self.handle_commands(class_name, command, args)
-                else:
-                    self.handle_commands(class_name, command)
+            obj_dict = storage.all()
+            char = "{}.{}".format(args[0], args[1])
+            if char not in obj_dict:
+                print("** no instance found **")
+            elif len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 3:
+                print("** value missing **")
             else:
-                print("Unknown syntax: {}".format(cmd_line))
-        elif "." in cmd_line:
-            class_name, command = cmd_line.split('.')
-            if class_name in self.classes and command in self.valid_commands:
-                self.handle_commands(class_name, command)
-            else:
-                print("Unknown syntax: {}".format(cmd_line))
-        else:
-            print("Unknown syntax: {}".format(cmd_line))
+                m = ["id", "created_at", "updated_at"]
+                if args[2] not in m:
+                    for key, value in obj_dict.items():
+                        setattr(value, args[2], eval(args[3]))
+                        val
 
-    def handle_commands(self, class_name, command):
+    def help_update(self):
         """
-        This method handles the commands
+        Display help for the update command.
         """
-        if class_name not in self.classes:
+        print("Update an instance based on the class name and id")
+
+    def do_count(self, mode):
+        """
+        Instance counter according to class.
+        """
+        args = mode.split(" ")
+        if mode not in self.__cls:
             print("** class doesn't exist **")
-            return
+        else:
+            m = []
+            d_l = storage.all()
+            for k, v in d_l.items():
+                if args[0] in k:
+                    m.append(v)
+            print(len(m))
 
-        if command == "all" or command == "all()":
-            self.do_all(class_name)
-        elif command == "count" or command == "count()":
-            self.do_count(class_name)
-        elif command == "show" or command == "show()":
-            self.do_show(class_name)
+    def help_count(self):
+        """
+        Display help for count command.
+        """
+        print("Display an the number of instances of a class")
+
+    def default(self, mode):
+        """
+        cmd method to validate and parse when it does not
+        recognize command syntax
+        """
+        args = mode.split(".")
+        parse = args[1].split("(")
+        parse_line = parse[1].split(")")
+        new_line = parse_line[0].split(",")
+        if args[0] in self.__cls:
+            if args[1] == "all()":
+                mode_cls = args[0]
+                return self.do_all(mode_cls)
+            elif args[1] == "count()":
+                mode_cls = args[0]
+                return self.do_count(mode_cls)
+            elif args[1][0:4] == 'show':
+                mode_cls = args[0] + " " + parse_line[0]
+                return self.do_show(mode_cls)
+            elif args[1][0:7] == 'destroy':
+                mode_cls = args[0] + " " + parse_line[0]
+                return self.do_destroy(mode_cls)
+            elif args[1][0:6] == "update":
+                mode_cls = (
+                    args[0] + " " + new_line[0] + "" +
+                    new_line[1] + "" + new_line[2]
+                )
+                return self.do_update(mode_cls)
 
 
 if __name__ == '__main__':
