@@ -191,7 +191,7 @@ class HBNBCommand(cmd.Cmd):
         Display help for the update command.
         """
         print("Update an instance based on the class name and id")
-    
+
     def do_count(self, mode):
         """
         Instance counter according to class.
@@ -236,7 +236,10 @@ class HBNBCommand(cmd.Cmd):
                 mode_cls = args[0] + " " + parse_line[0]
                 return self.do_destroy(mode_cls)
             elif args[1][0:6] == "update":
-                mode_cls = args[0] + " " + new_line[0] + "" + new_line[1] + "" + new_line[2]
+                mode_cls = (
+                    args[0] + " " + new_line[0] + "" +
+                    new_line[1] + "" + new_line[2]
+                )
                 return self.do_update(mode_cls)
 
 
