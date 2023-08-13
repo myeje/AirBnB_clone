@@ -190,7 +190,5 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload_no_file(self):
         store = FileStorage()
-        try:
-            store.reload()
-        except FileNotFoundError as e:
-            print(f"Caught exception: {e}")
+        self.assertRaises(FileNotFoundError)
+        store.reload()
