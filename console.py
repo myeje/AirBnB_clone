@@ -84,7 +84,23 @@ class HBNBCommand(cmd.Cmd):
         Display the string representation of an instance.
         Usage: show User <id>
         """
-        self._validate_show_and_destroy(args, "show")
+        if args:
+            arg = self.parseline(args)
+            pal = arg[0]
+            obj_id = arg[1]
+            if pal not in self.__cls:
+                print("** class doesn't exist **")
+            elif not obj_id:
+                print("** instance id missing **")
+            else:
+                obj_key = f'{pal}.{obj_id}'
+                obj_dict = storage.all()
+                if obj_key in obj_dict.obj_keys():
+                    print(obj_dict[obj_key])
+                else:
+                    print("** no instance found **")
+        else:
+            print("** class name missing **")
 
     def help_show(self):
         """
@@ -97,7 +113,24 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id.
         Usage: destroy User <id>
         """
-        self._validate_show_and_destroy(args, "destroy")
+        if args:
+            arg = self.parseline(args)
+            pal = arg[0]
+            obj_id = arg[1]
+            if pal not in self.__cls:
+                print("** class doesn't exist **")
+            elif not obj_id:
+                print("** instance id missing **")
+            else:
+                obj_key = f'{pal}.{obj_id}'
+                obj_dict = storage.all()
+                if key in obj_dict.obj_keys():
+                    del obj_dict[obj_key])
+                    storage.save()
+                else:
+                    print("** no instance found **")
+        else:
+            print("** class name missing **")
 
     def help_destroy(self):
         """
@@ -144,32 +177,6 @@ class HBNBCommand(cmd.Cmd):
         Display help for the update command.
         """
         print("Update an instance based on the class name and id")
-
-    def _validate_show_and_destroy(self, arg, action):
-        """
-        Validates show and destroy method
-        """
-        if not arg:
-            print(f"** class name missing **")
-            return
-        args = arg.split()
-        if args[0] not in self.__cls:
-            print("** class doesn't exist **")
-            return
-        if len(args) < 2:
-            print(f"** {action} id missing **")
-            return
-        storage = FileStorage()
-        obj_dict = storage.all()
-        obj_key = f"{args[0]}.{args[1]}"
-        if obj_key not in obj_dict:
-            print("** no instance found **")
-            return
-        if action == "show":
-            print(obj_dict[obj_key])
-        elif action == "destroy":
-            del obj_dict[obj_key]
-            storage.save()
 
     def _validate_update(self, args):
         """
