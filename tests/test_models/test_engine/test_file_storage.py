@@ -125,6 +125,10 @@ class TestFileStorage(unittest.TestCase):
             readFilePlace = myFilePlace.read()
             stringPlace = "{}.{}".format(place1.__class__.__name__, place1.id)
             self.assertIn(stringPlace, readFilePlace)
+    
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
 
     def test_save_Review(self):
         """
@@ -172,3 +176,26 @@ class TestFileStorage_instantiation(unittest.TestCase):
 
     def test_storage_initializes(self):
         self.assertEqual(type(models.storage), FileStorage)
+
+class TestFileStorage_methods(unittest.TestCase):
+    """Unittests for testing methods of the FileStorage class."""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self) -> None:
+        """Resets FileStorage data."""
+        FileStorage._FileStorage__objects = {}
+        if os.path.exists(FileStorage._FileStorage__file_path):
+            os.remove(FileStorage._FileStorage__file_path)
+
+    def test_all(self):
+        self.assertEqual(dict, type(models.storage.all()))
+
+    def test_all_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.all(None)
+
+    def test_reload_with_arg(self):
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
