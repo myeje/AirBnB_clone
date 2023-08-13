@@ -25,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
         "Place",
         "Review"
     ]
-    valid_commands = ["all", "count"]
 
     def do_quit(self, args):
         """Quit command to exit the program
@@ -34,6 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """EOF command to exit the program (CTRL + D)"""
+        print("")
         return True
 
     def emptyline(self):
