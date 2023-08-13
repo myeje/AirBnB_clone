@@ -158,3 +158,40 @@ class TestFileStorage(unittest.TestCase):
         """Test if FileStorage module is documented.
         """
         self.assertIsNotNone(FileStorage.__doc__)
+
+    def test_raises_error_for_private_attribute(self):
+        """Check if it raises error when trying to access the
+            private attribute ``file path`` and ``objects``
+        """
+        store = FileStorage()
+        with self.assertRaises(AttributeError):
+            store.__file_path
+        with self.assertRaises(AttributeError):
+            store.__object
+
+    def test_all_method(self):
+        """This test the all method for right return type
+        """
+        fs = FileStorage()
+        self.assertEqual(type(fs.all()), dict)
+
+    def test_new_method(self):
+        """This test the `new` method for right behaviour
+        """
+        b = BaseModel()
+        fs = FileStorage()
+        fs.new(b)
+        fs_keys = fs.all().keys()
+        self.assertIn(f'{b.__class__.__name__}.{b.id}', fs_keys)
+
+    def test_save_method(self):
+        """This test the save method
+        """
+        fs = FileStorage()
+        fs.save()
+
+    def test_reload_method(self):
+        """This test the reload method
+        """
+        fs = FileStorage()
+        fs.reload()
