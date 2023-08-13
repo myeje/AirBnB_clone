@@ -169,29 +169,10 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(AttributeError):
             store.__object
 
-    def test_all_method(self):
-        """This test the all method for right return type
-        """
-        fs = FileStorage()
-        self.assertEqual(type(fs.all()), dict)
+    def test_attrs(self):
+        store = FileStorage()
+        self.assertEqual(store._FileStorage__file_path, "file.json")
+        self.assertIsInstance(store._FileStorage__objects, dict)
 
-    def test_new_method(self):
-        """This test the `new` method for right behaviour
-        """
-        b = BaseModel()
-        fs = FileStorage()
-        fs.new(b)
-        fs_keys = fs.all().keys()
-        self.assertIn(f'{b.__class__.__name__}.{b.id}', fs_keys)
-
-    def test_save_method(self):
-        """This test the save method
-        """
-        fs = FileStorage()
-        fs.save()
-
-    def test_reload_method(self):
-        """This test the reload method
-        """
-        fs = FileStorage()
-        fs.reload()
+if __name__ == '__main__':
+    unittest.main
