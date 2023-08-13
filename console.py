@@ -180,11 +180,12 @@ class HBNBCommand(cmd.Cmd):
             elif len(args) == 3:
                 print("** value missing **")
             else:
-                m = ["id", "created_at", "updated_at"]
-                if args[2] not in m:
-                    for key, value in obj_dict.items():
-                        setattr(value, args[2], eval(args[3]))
-                        value.save()
+                obj = obj_dict[char]
+                data = json.loads(args[3].replace('\'', '\"'))
+                for key, value in data.items():
+                    if hasattr(obj, key):
+                        setattr(obj, key, value)
+                obj.save()
 
     def help_update(self):
         """
