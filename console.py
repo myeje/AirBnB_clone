@@ -172,6 +172,16 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, attribute_name, attribute_value)
             storage.save()
 
+        if len(args) > 5:
+            try:
+                dict_str = ' '.join(args[5:])
+                data_dict = eval(dict_str)
+                for key, value in data_dict.items():
+                    setattr(obj, key, value)
+                storage.save()
+            except Exception as e:
+                print("** invalid dictionary representation **")
+
     def default(self, line):
         """
         This method is called on an input line
