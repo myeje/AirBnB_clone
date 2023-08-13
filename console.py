@@ -181,6 +181,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** value missing **")
             else:
                 obj = obj_dict[char]
+                attribute_name = args[2]
 
                 if args[-1][0] == "{" and args[-1][-1] == "}":
                     try:
@@ -191,7 +192,10 @@ class HBNBCommand(cmd.Cmd):
                     except Exception as e:
                         print("** invalid dictionary representation **")
                 else:
-                    setattr(obj, args[2], args[3])
+                    if args[3][0] == '"' and args[3][-1] == '"':
+                        setattr(obj, attribute_name, args[3][1:-1])
+                    else:
+                        setattr(obj, attribute_name, args[3])
                     storage.save()
 
     def help_update(self):
