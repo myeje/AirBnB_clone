@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import unittest
 from console import HBNBCommand
 from models.base_model import BaseModel
@@ -11,6 +12,7 @@ import json
 """
 Unittest for Console
 """
+
 
 class TestConsole(unittest.TestCase):
 
