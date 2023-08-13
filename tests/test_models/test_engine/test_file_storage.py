@@ -158,3 +158,32 @@ class TestFileStorage(unittest.TestCase):
         """Test if FileStorage module is documented.
         """
         self.assertIsNotNone(FileStorage.__doc__)
+
+    def test_raises_error_for_private_attribute(self):
+        """Check if it raises error when trying to access the
+            private attribute ``file path`` and ``objects``
+        """
+        store = FileStorage()
+        with self.assertRaises(AttributeError):
+            store.__file_path
+        with self.assertRaises(AttributeError):
+            store.__object
+
+    def test_attrs(self):
+        store = FileStorage()
+        self.assertEqual(store._FileStorage__file_path, "file.json")
+        self.assertIsInstance(store._FileStorage__objects, dict)
+
+    def test_class_exists(self):
+        """Tests if class exists.
+        """
+        store = FileStorage()
+        result = "<class 'models.engine.file_storage.FileStorage'>"
+        self.assertEqual(str(type(store)), result)
+
+    def test_types(self):
+        """Test if attributes type is correct.
+        """
+        store = FileStorage()
+        self.assertIsInstance(store, FileStorage)
+        self.assertEqual(type(store), FileStorage)
