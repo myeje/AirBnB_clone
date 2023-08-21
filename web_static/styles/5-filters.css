@@ -4,10 +4,7 @@
 	width: 100%;
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	padding: 0 30px;
+	padding: 4px;
 }
 
 button {
@@ -19,9 +16,9 @@ button {
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
-	display: flex;
+	float: right;
 	align-items: center;
-	justify-content: center;
+	margin: 10px 30px 10px 0px;
 }
 
 button:hover {
@@ -29,26 +26,24 @@ button:hover {
 }
 
 .locations, .amenities {
-	height: 100%;
-	width: 25%;
-	display: inline-block;
-	margin-left: 20px;
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+    margin-left: 20px;
 }
 
 .locations {
-	border-right: #DDDDDD 1px solid;
+    border-right: 1px solid #DDDDDD;
 }
 
-.title {
-	padding: 0;
-	font-weight: 600;
-	margin-top: 17px;
-	margin-bottom: 0;
+h3 {
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
-.subtitle {
-	margin: 0;
-	padding: 0;
-	font-weight: 400;
-	font-size: 14;
+h4 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 0;
+    margin: 0;
 }
