@@ -36,12 +36,12 @@ button:hover {
     border-right: 1px solid #DDDDDD;
 }
 
-h3 {
+.title {
     font-weight: 600;
     margin-bottom: 8px;
 }
 
-h4 {
+.subtitle {
     font-weight: 400;
     font-size: 14px;
     line-height: 0;
